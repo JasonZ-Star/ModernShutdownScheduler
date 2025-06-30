@@ -1,0 +1,76 @@
+﻿<Window x:Class="ModernShutdownScheduler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShutdownScheduler"
+        xmlns:viewmodels="clr-namespace:ModernShutdownScheduler.ViewModels"
+        mc:Ignorable="d"
+        Title="定时关机工具" Height="300" Width="450"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:0.5"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Border CornerRadius="20" Background="#FF2D2D30" BorderBrush="#FF444444" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="定时关机工具" Grid.Row="0" Foreground="White" FontSize="16" FontWeight="Bold" Margin="20,10,0,10" VerticalAlignment="Center"/>
+            <Button Grid.Row="0" Content="✕"
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Width="30" Height="30" Margin="0,5,15,0"
+                    FontSize="16" FontWeight="Bold"
+                    Click="CloseButton_Click"
+                    Style="{StaticResource RoundedButtonStyle}"/>
+
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical">
+                <TextBlock Text="{Binding CountdownText}"
+                           Foreground="White" FontSize="24" FontWeight="SemiBold"
+                           HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="在" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding ShutdownTimeInMinutes, UpdateSourceTrigger=PropertyChanged}"
+                            
+                             Width="80" Height="30" Margin="10,0"
+                             FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                             IsEnabled="{Binding IsTimerStopped}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding EnterPressedCommand}" Key="Enter"/>
+                        </TextBox.InputBindings>
+
+                    </TextBox>
+                    
+                    <TextBlock Text="分钟后关机" Foreground="White" FontSize="16" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,25">
+                <Button Content="开始定时" Width="120" Height="40" Margin="10"
+                        Command="{Binding ScheduleShutdownCommand}"
+                        Style="{StaticResource RoundedButtonStyle}"/>
+                <Button Content="取消定时" Width="120" Height="40" Margin="10"
+                        Command="{Binding CancelShutdownCommand}"
+                        Style="{StaticResource RoundedButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
