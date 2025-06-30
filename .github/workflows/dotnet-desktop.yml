@@ -80,7 +80,7 @@ jobs:
 
 
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:Runtime_Identifier
       env:
         Configuration: ${{ matrix.configuration }}
         untime_Identifier: ${{ env.Runtime_Identifier }}
