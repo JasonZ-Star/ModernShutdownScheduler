@@ -79,11 +79,17 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
 
+    # - name: Restore the application
+    #   run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:Runtime_Identifier
+    #   env:
+    #     Configuration: ${{ matrix.configuration }}
+    #     untime_Identifier: ${{ env.Runtime_Identifier }}
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:RuntimeIdentifier=$env:Runtime_Identifier
+      run: dotnet restore $env:Solution_Name -r $env:Runtime_Identifier /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
-        untime_Identifier: ${{ env.Runtime_Identifier }}
+        Runtime_Identifier: ${{ env.Runtime_Identifier }}
+
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
