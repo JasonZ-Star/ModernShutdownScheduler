@@ -83,11 +83,13 @@ jobs:
       run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
+        untime_Identifier: ${{ env.Runtime_Identifier }}
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
-      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle 
+      run: msbuild $env:Wap_Project_Path /p:Platform=x64 /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle 
       env:
+        untime_Identifier: ${{ env.Runtime_Identifier }}
         Appx_Bundle: Always
         Appx_Bundle_Platforms: x64
         Appx_Package_Build_Mode: StoreUpload
