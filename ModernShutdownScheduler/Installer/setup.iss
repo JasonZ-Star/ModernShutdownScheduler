@@ -25,7 +25,7 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Languages]
-Name: "chinesesimplified"; MessagesFile: "Default.isl"
+Name: "english"; MessagesFile: "Default.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
