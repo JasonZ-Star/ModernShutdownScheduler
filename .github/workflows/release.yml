@@ -1,37 +1,47 @@
 name: Build and Release Installer
 
 on:
+  # 触发器：当一个以 'v' 开头的标签被推送到仓库时运行
   push:
     tags:
       - 'v*'
-
-  workflow_dispatch: # 允许手动触发
-
+  
+  # 允许在 GitHub 页面上手动触发此工作流
+  workflow_dispatch:
 
 jobs:
   build-release:
+    # 使用最新的 Windows 环境
     runs-on: windows-latest
 
     steps:
+      # 第 1 步：检出你的代码库
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 第 2 步：安装 .NET SDK
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
+      # 第 3 步：发布你的 WPF 应用程序
       - name: Publish Application
         run: dotnet publish ModernShutdownScheduler/ModernShutdownScheduler.csproj --configuration Release --self-contained false --output ./publish
 
+      # 第 4 步：编译安装包
       - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        uses: kmaragon/setup-inno-setup-action@v1
         with:
           path: ModernShutdownScheduler/installer/setup.iss
+          # 注意：这里的 options 是可选的，如果不需要可以移除
           options: /O+
 
+      # 第 5 步：创建 GitHub Release 并上传安装包
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        # 这个 if 条件是好的，可以保留
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: installer/output/*.exe
+          # 注意：这个路径必须和你的 setup.iss 脚本中 OutputDir 的设置相匹配
+          files: ModernShutdownScheduler/installer/output/*.exe
