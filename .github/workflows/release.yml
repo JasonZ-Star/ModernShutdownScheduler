@@ -2,8 +2,7 @@ name: Build and Release Installer
 
 on:
   push:
-    tags:
-      - 'v*' # 当一个 v 开头的 tag 被推送到仓库时触发
+   branches: [ "master" ]
 
   workflow_dispatch: # 允许手动触发
 
@@ -21,7 +20,7 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Publish Application
-        run: dotnet publish ./ModernShutdownScheduler.csproj --configuration Release --self-contained false --output ./publish
+        run: dotnet publish ModernShutdownScheduler/ModernShutdownScheduler.csproj --configuration Release --self-contained false --output ./publish
 
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
