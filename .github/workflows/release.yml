@@ -33,10 +33,9 @@ jobs:
 
       # 第 4 步：编译安装包
       - name: Compile .ISS to .EXE Installer
-        uses: kmaragon/setup-inno-setup-action@v1
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: ModernShutdownScheduler/installer/setup.iss
-          # 注意：这里的 options 是可选的，如果不需要可以移除
           options: /O+
 
       # 第 5 步：创建 GitHub Release 并上传安装包
