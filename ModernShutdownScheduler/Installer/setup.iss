@@ -9,6 +9,7 @@
 #define NetInstaller "runtime-9.0.6-win-x64.exe"
 
 
+
 [Setup]
 AppId={{AUTO-GENERATED-GUID}}
 AppName={#AppName}
