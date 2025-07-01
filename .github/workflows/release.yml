@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*' # 当一个 v 开头的 tag 被推送到仓库时触发
+
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -22,17 +23,14 @@ jobs:
       - name: Publish Application
         run: dotnet publish ./ModernShutdownScheduler.csproj --configuration Release --self-contained false --output ./publish
 
-      - name: Setup Inno Setup
-        uses: Miniong/setup-inno-setup@v1.1.0
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: installer/setup.iss
+          options: /O+
 
       - name: Compile Installer
         run: iscc "installer/setup.iss"
-
-      - name: Upload Installer as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ModernShutdownScheduler-Setup
-          path: installer/output/*.exe
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

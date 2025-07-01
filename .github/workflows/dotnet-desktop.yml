@@ -40,9 +40,9 @@ name: .NET Core Desktop
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - 'ms*' # 当一个 v 开头的 tag 被推送到仓库时触发
+  workflow_dispatch: # 允许手动触发
 
 jobs:
 
