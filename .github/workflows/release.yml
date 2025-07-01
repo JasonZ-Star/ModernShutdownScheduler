@@ -2,7 +2,8 @@ name: Build and Release Installer
 
 on:
   push:
-   branches: [ "master" ]
+    tags:
+      - 'v*'
 
   workflow_dispatch: # 允许手动触发
 
