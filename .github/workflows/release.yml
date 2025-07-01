@@ -28,9 +28,6 @@ jobs:
           path: ModernShutdownScheduler/installer/setup.iss
           options: /O+
 
-      - name: Compile Installer
-        run: iscc "installer/setup.iss"
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
