@@ -85,7 +85,7 @@ jobs:
     #     Configuration: ${{ matrix.configuration }}
     #     untime_Identifier: ${{ env.Runtime_Identifier }}
     - name: Restore the application
-      run: dotnet restore $env:Solution_Name -r $env:Runtime_Identifier /p:Configuration=$env:Configuration
+      run: dotnet restore $env:Solution_Name -r /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
         Runtime_Identifier: ${{ env.Runtime_Identifier }}
@@ -100,12 +100,12 @@ jobs:
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
-      run: msbuild $env:Wap_Project_Path /p:Platform=x64 /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle  /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.PFX_PASSWORD }}
+      run: msbuild $env:Wap_Project_Path /p:Configuration=$env:Configuration /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle  /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:PackageCertificatePassword=${{ secrets.PFX_PASSWORD }} 
+           /p:AppxPackageDir="${{ github.workspace }}\dist\"
       env:
         untime_Identifier: ${{ env.Runtime_Identifier }}
         Appx_Bundle: Always
-        Appx_Bundle_Platforms: x64
-        Appx_Package_Build_Mode: StoreUpload
+        Appx_Package_Build_Mode: Sideload
         Configuration: ${{ matrix.configuration }}
 
     # Remove the pfx
@@ -117,4 +117,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+        path: ${{ github.workspace }}\dist\*.msix*
