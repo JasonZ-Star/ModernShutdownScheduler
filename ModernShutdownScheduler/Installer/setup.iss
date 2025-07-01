@@ -32,7 +32,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 ; 1. 打包你的应用文件 (Action 会将它们发布到 'publish' 文件夹)
-Source: "..\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "..\..\publish\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; 2. 打包 .NET 运行库安装包
 Source: "redist\{#NetInstaller}"; DestDir: "{tmp}"; Flags: deleteafterinstall
 
