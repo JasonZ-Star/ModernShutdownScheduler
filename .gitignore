@@ -364,8 +364,6 @@ FodyWeavers.xsd
 
 *.pfx
 
-output/
-
 
 # Publish output
 publish/
