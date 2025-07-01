@@ -13,6 +13,8 @@ jobs:
   build-release:
     # 使用最新的 Windows 环境
     runs-on: windows-latest
+    permissions:
+      contents: write
 
     steps:
       # 第 1 步：检出你的代码库
