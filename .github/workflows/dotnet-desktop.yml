@@ -117,4 +117,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: MSIX Package
-        path: ${{ github.workspace }}\dist\*.msix*
+        path: ${{ github.workspace }}\dist\**\*.msix*
