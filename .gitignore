@@ -365,3 +365,15 @@ FodyWeavers.xsd
 *.pfx
 
 output/
+
+
+# Publish output
+publish/
+
+# Installer output
+installer/output/
+
+# User-specific files
+.vs/
+*.suo
+*.user
