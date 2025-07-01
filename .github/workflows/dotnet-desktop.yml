@@ -85,7 +85,7 @@ jobs:
     #     Configuration: ${{ matrix.configuration }}
     #     untime_Identifier: ${{ env.Runtime_Identifier }}
     - name: Restore the application
-      run: dotnet restore $env:Solution_Name /p:Configuration=$env:Configuration
+      run: dotnet restore $env:Solution_Name -r $env:Runtime_Identifier /p:Configuration=$env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
         Runtime_Identifier: ${{ env.Runtime_Identifier }}
