@@ -25,7 +25,7 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: installer/setup.iss
+          path: ModernShutdownScheduler/installer/setup.iss
           options: /O+
 
       - name: Compile Installer
